@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     // URL query returns JSON object representing news articles from The Guardian
     // query is "mexico surf" returns 20 most recent articles
     private static final String GUARDIAN_REQUEST_URL =
-            "https://content.guardianapis.com/search?order-by=newest&q=Mexico%20and%20surf&page-size=0&show-tags=contributor&show-elements=image&show-fields=headline,thumbnail,trailText&api-key=d34b30e0-7d4c-42c9-9bc4-0af20234ffc4";
+            "https://content.guardianapis.com/search?order-by=newest&q=Mexico%20and%20surf&page-size=20&show-tags=contributor&show-elements=image&show-fields=headline,thumbnail,trailText&api-key=d34b30e0-7d4c-42c9-9bc4-0af20234ffc4";
 
     // constant value for the ID of the single article loader
     private static final int ARTICLE_LOADER_ID = 0;
@@ -86,13 +86,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         });
 
-        // get status of internet connectivity
-        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-        boolean isConnected = (activeNetwork != null) && activeNetwork.isConnectedOrConnecting();
-
         // check status for internet connectivity
-        if (isConnected) {
+        if (isConnected()) {
 
             // initialize a loader manager to handle a background thread
             LoaderManager loaderManager = getLoaderManager();
@@ -106,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             // hide the progress bar
             mProgressBar.setVisibility(View.GONE);
 
-            // the earthquakes list is empty
+            // the articles list is empty
             mEmptyTextView.setText(R.string.no_internet_connection);
 
         }
@@ -142,19 +137,44 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
         else {
 
-            // the earthquakes list is empty
-            mEmptyTextView.setText(R.string.no_articles_found);
+            // this conditional handles the rare edge case of (1) successful network call and population of ListView
+            // (2) leave app, (3) lose internet connection, (4) return to app
+            if (isConnected()) {
+
+                // the articles list is empty because there are no articles matching the search criteria
+                mEmptyTextView.setText(R.string.no_articles_found);
+
+            }
+
+            // internet connection was lost after a loader with ARTICLE_LOADER_ID was successfully completed
+            else {
+
+                // the articles list is empty because there is no internet connection
+                mEmptyTextView.setText(R.string.no_internet_connection);
+            }
+
         }
 
     }
 
     // previously created loader is no longer needed and existing data should be discarded
-    // for this app this only occurs when the device "Back" button is pressed
     @Override
     public void onLoaderReset(Loader<List<Article>> loader) {
 
         // removing all data from adapter automatically clears the UI listview
         mAdapter.clear();
+
+    }
+
+    // check status of internet connectivity
+    public boolean isConnected() {
+
+        // get connectivity status as a boolean
+        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        boolean isConnected = (activeNetwork != null) && activeNetwork.isConnectedOrConnecting();
+
+        return isConnected;
 
     }
 

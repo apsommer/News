@@ -196,7 +196,7 @@ public final class QueryUtils {
         } catch (JSONException e) {
 
             // log exception stack trace
-            Log.e(LOG_TAG, "Problem parsing the earthquake JSON results.", e);
+            Log.e(LOG_TAG, "Problem parsing the article JSON results.", e);
         }
 
         // return the list of news articles

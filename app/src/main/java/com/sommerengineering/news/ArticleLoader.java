@@ -2,7 +2,6 @@ package com.sommerengineering.news;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-
 import java.util.List;
 
 // loads a list of news article metadata using a background AsyncTask to perform a network URL request
@@ -40,9 +39,9 @@ public class ArticleLoader extends AsyncTaskLoader<List<Article>> {
         }
 
         // perform the HTTP request for article data and process the JSON response
-        List<Article> earthquakes = QueryUtils.fetchArticleData(mUrl);
+        List<Article> articles = QueryUtils.fetchArticleData(mUrl);
 
-        return earthquakes;
+        return articles;
 
     }
 

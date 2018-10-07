@@ -20,8 +20,11 @@
         android:id="@+id/empty_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="No articles found."
-        android:layout_centerInParent="true" />
+        tools:text="@string/no_articles_found"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/margin"
+        android:gravity="center"
+        />
 
     <!-- progress bar for loading network call -->
     <ProgressBar

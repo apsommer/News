@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     // URL query returns JSON object representing news articles from The Guardian
     // query is "mexico surf" returns 20 most recent articles
     private static final String GUARDIAN_REQUEST_URL =
-            "https://content.guardianapis.com/search?order-by=newest&q=mexico%20and%20surf&page-size=20&show-tags=contributor&show-elements=image&show-fields=headline,thumbnail,trailText&api-key=d34b30e0-7d4c-42c9-9bc4-0af20234ffc4";
+            "https://content.guardianapis.com/search?order-by=newest&q=Mexico%20and%20surf&page-size=0&show-tags=contributor&show-elements=image&show-fields=headline,thumbnail,trailText&api-key=d34b30e0-7d4c-42c9-9bc4-0af20234ffc4";
 
     // constant value for the ID of the single article loader
     private static final int ARTICLE_LOADER_ID = 0;

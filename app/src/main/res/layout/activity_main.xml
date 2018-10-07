@@ -2,7 +2,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
-    android:layout_width="match_parent" >
+    android:layout_width="match_parent"
+    android:background="@drawable/gradient_background"
+    >
 
     <!-- primary app screen -->
     <ListView
@@ -10,8 +12,8 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null"
-        android:dividerHeight="0dp" />
+        android:divider="@drawable/divider_list_item"
+        android:dividerHeight="1dp" />
 
     <!-- empty state of ListView -->
     <TextView

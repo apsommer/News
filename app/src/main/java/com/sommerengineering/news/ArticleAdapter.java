@@ -1,25 +1,17 @@
 package com.sommerengineering.news;
 
 import android.content.Context;
-import android.graphics.drawable.GradientDrawable;
-import android.support.v4.content.ContextCompat;
 import android.text.Html;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.sql.Timestamp;
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
 
 public class ArticleAdapter extends ArrayAdapter<Article> {
 
@@ -55,9 +47,8 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
 
         // get View references from list_item
         TextView titleTextView = (TextView) listItemView.findViewById(R.id.title);
-        TextView trailTextView = (TextView) listItemView.findViewById(R.id.body);
-        TextView firstNameTextView = (TextView) listItemView.findViewById(R.id.first_name);
-        TextView lastNameTextView = (TextView) listItemView.findViewById(R.id.last_name);
+        TextView trailTextView = (TextView) listItemView.findViewById(R.id.trail_text);
+        TextView authorNameTextView = (TextView) listItemView.findViewById(R.id.author_name);
         TextView dateTextView = (TextView) listItemView.findViewById(R.id.date);
         TextView sectionTextView = (TextView) listItemView.findViewById(R.id.section);
 
@@ -71,19 +62,23 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
             // ensure that first name starts with a capital letter
             String firstName = currentArticle.getFirstName();
             String capitalizedFirstName = firstName.substring(0,1).toUpperCase() + firstName.substring(1);
-            firstNameTextView.setText(capitalizedFirstName);
+
 
             // ensure that last name starts with a capital letter
             String lastName = currentArticle.getLastName();
             String capitalizedLastName = lastName.substring(0,1).toUpperCase() + lastName.substring(1);
-            lastNameTextView.setText(capitalizedLastName);
+
+
+            String fullName = capitalizedFirstName + " " + capitalizedLastName;
+            authorNameTextView.setText(fullName);
 
         }
+
+        // this error is thrown when there is no author name in the JSON metadata
         catch (StringIndexOutOfBoundsException e) {
 
-            // hide the TextViews as there is no author name
-            firstNameTextView.setVisibility(View.GONE);
-            lastNameTextView.setVisibility(View.GONE);
+            // hide the TextView
+            authorNameTextView.setVisibility(View.GONE);
 
         }
 

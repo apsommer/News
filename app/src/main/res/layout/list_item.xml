@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:gravity="center_vertical"
-    android:background="@drawable/gradient_background"
+    android:padding="@dimen/margin"
+
     >
+
+    <TextView
+
+        android:id="@+id/section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textSize="@dimen/text_small"
+        android:fontFamily="@font/adamina"
+        android:textColor="@color/black"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:textStyle="italic"
+        tools:text="Australia News" />
 
     <TextView
 
@@ -19,57 +34,26 @@
         android:textStyle="bold"
         android:textSize="@dimen/text_medium"
         android:textColor="@color/black"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginTop="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
         android:maxLines="2"
         android:ellipsize="end"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/section"
         tools:text="Title" />
 
     <TextView
 
-        android:id="@+id/body"
+        android:id="@+id/trail_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin"
         android:layout_marginTop="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
-        android:textSize="@dimen/text_small"
+        android:ellipsize="end"
         android:fontFamily="@font/adamina"
-        android:textColor="@color/black"
         android:maxLines="3"
-        android:ellipsize="end"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_small"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/title"
         tools:text="Trail text" />
-
-    <TextView
-
-        android:id="@+id/first_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:ellipsize="end"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginTop="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
-        android:textSize="@dimen/text_small"
-        android:fontFamily="@font/adamina"
-        android:textColor="@color/black"
-        tools:text="first name" />
-
-    <TextView
-
-        android:id="@+id/last_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:ellipsize="end"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginTop="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
-        android:textSize="@dimen/text_small"
-        android:fontFamily="@font/adamina"
-        android:textColor="@color/black"
-        tools:text="last name" />
 
     <TextView
 
@@ -77,25 +61,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
-        android:layout_marginLeft="@dimen/margin"
         android:layout_marginTop="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
         android:textSize="@dimen/text_small"
         android:fontFamily="@font/adamina"
         android:textColor="@color/black"
-        tools:text="date" />
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/trail_text"
+        android:textStyle="italic"
+        tools:text="Oct 6, 2018" />
 
     <TextView
 
-        android:id="@+id/section"
+        android:id="@+id/author_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:ellipsize="end"
-        android:layout_margin="@dimen/margin"
         android:textSize="@dimen/text_small"
         android:fontFamily="@font/adamina"
         android:textColor="@color/black"
-        tools:text="section" />
+        android:textStyle="italic"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/date"
+        tools:text="Author Name" />
 
-</LinearLayout>
+</RelativeLayout>

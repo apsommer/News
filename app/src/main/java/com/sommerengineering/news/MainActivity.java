@@ -1,19 +1,26 @@
 package com.sommerengineering.news;
 
+import android.app.ActionBar;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toolbar;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +30,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public static final String LOG_TAG = MainActivity.class.getName();
 
     // URL query returns JSON object representing news articles from The Guardian
-    // query is "mexico surf" returns 20 most recent articles
     private static final String GUARDIAN_REQUEST_URL =
-            "https://content.guardianapis.com/search?order-by=newest&q=Mexico%20and%20surf&page-size=20&show-tags=contributor&show-elements=image&show-fields=headline,thumbnail,trailText&api-key=d34b30e0-7d4c-42c9-9bc4-0af20234ffc4";
+            "https://content.guardianapis.com/search";
+
+    // "https://content.guardianapis.com/search?order-by=newest&q=Mexico%20and%20surf&page-size=20&show-tags=contributor&show-elements=image&show-fields=headline,thumbnail,trailText&api-key=d34b30e0-7d4c-42c9-9bc4-0af20234ffc4"
+    // ?order-by=newest&q=Mexico%20and%20surf&page-size=20&show-tags=contributor&show-elements=image&show-fields=headline,thumbnail,trailText&api-key=d34b30e0-7d4c-42c9-9bc4-0af20234ffc4
+
+    // "https://earthquake.usgs.gov/fdsnws/event/1/query"
+    // "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=10&minmag=minMagnitude&orderby=orderBy"
 
     // constant value for the ID of the single article loader
     private static final int ARTICLE_LOADER_ID = 0;
@@ -34,6 +46,35 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private ArticleAdapter mAdapter;
     private TextView mEmptyTextView;
     private ProgressBar mProgressBar;
+
+    // initialize options menu in Action Bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // inflate menu
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    // called when the settings menu is clicked
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        // get id of menu item
+        int id = item.getItemId();
+
+        // hamburger icon in top-right is pressed
+        if (id == R.id.action_settings) {
+
+            // explicit Intent to start new SettingsActivity
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+
+        // call through to base class to perform the default menu handling
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,8 +154,42 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public Loader<List<Article>> onCreateLoader(int i, Bundle bundle) {
 
-        // create and return a new loader with the given URL
-        ArticleLoader loader = new ArticleLoader(this, GUARDIAN_REQUEST_URL);
+        // get the hardcoded default preferences
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        // retrieve user preference for minimum magnitude
+        // a reference to the default preference is required by getString
+        String pageCountKey = getString(R.string.settings_min_magnitude_key);
+        String pageCountDefaultValue = getString(R.string.settings_min_magnitude_default);
+        String pageCount = sharedPrefs.getString(pageCountKey, pageCountDefaultValue);
+
+        // retrieve user preference for order-by
+        // a reference to the default preference is required by getString
+        String orderByKey = getString(R.string.settings_order_by_key);
+        String orderByDefaultValue = getString(R.string.settings_order_by_default);
+        String orderBy = sharedPrefs.getString(orderByKey, orderByDefaultValue);
+
+        // split URL String into constituent parts
+        Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
+
+        // prepare URI object for appending query parameters
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        // append query parameters, for example "format=geojson"
+        uriBuilder.appendQueryParameter("order-by", orderBy);
+        uriBuilder.appendQueryParameter("q", "Mexico%20and%20surf");
+        uriBuilder.appendQueryParameter("page-size", pageCount);
+        uriBuilder.appendQueryParameter("show-tags", "contributor");
+        uriBuilder.appendQueryParameter("show-elements", "image");
+        uriBuilder.appendQueryParameter("show-fields", "headline,thumbnail,trailText");
+        uriBuilder.appendQueryParameter("api-key", "d34b30e0-7d4c-42c9-9bc4-0af20234ffc4");
+
+        // convert completed URI to String
+        // for example "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=10&minmag=minMagnitude&orderby=orderBy"
+        String urlFromUri = uriBuilder.toString();
+
+        // pass concatenated URL to new loader
+        ArticleLoader loader = new ArticleLoader(this, urlFromUri);
         return loader;
 
     }
@@ -137,8 +212,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
         else {
 
-            // this conditional handles the rare edge case of (1) successful network call and population of ListView
-            // (2) leave app, (3) lose internet connection, (4) return to app
+            // this conditional handles the rare edge case of (1) successful network call (2) populate ListView
+            // (3) leave app (4) lose internet connection (5) return to app
             if (isConnected()) {
 
                 // the articles list is empty because there are no articles matching the search criteria

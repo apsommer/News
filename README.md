@@ -1,37 +1,30 @@
-News Article App
-===================================
+# News Articles
 
-This app displays a list of recent news articles from The Guardian newspaper.
+This is an Android app that displays a list of recent news articles from [The Guardian](https://open-platform.theguardian.com/documentation/) newspaper, created as part of the [Android Basics Nanodegree by Google](https://www.udacity.com/course/android-basics-nanodegree-by-google--nd803).
 
-Used in a Udacity course in the Android Basics Nanodegree.
+#### Details grid on 720 x 1280p (API 25) in portrait orientation.
+#### ![](demo/phone.png)
 
-More info on The Guardian API available at:
-https://open-platform.theguardian.com/documentation/
-
-Pre-requisites
---------------
+### Pre-requisites
 
 - Android SDK v21
 - Android Build Tools v23.0.2
 - Android Support Repository v23.3.0
 
-Getting Started
----------------
+### Getting Started
 
 This sample uses the Gradle build system. To build this project, use the
 "gradlew build" command or use "Import Project" in Android Studio.
 
-Support
--------
+### Support
 
 - Google+ Community: https://plus.google.com/communities/105153134372062985968
 - Stack Overflow: http://stackoverflow.com/questions/tagged/android
 
 Patches are encouraged, and may be submitted by forking this project and
-submitting a pull request through GitHub. Please see CONTRIBUTING.md for more details.
+submitting a pull request through GitHub. Please see [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
 
-License
--------
+### License
 
 Copyright 2016 The Android Open Source Project, Inc.
 

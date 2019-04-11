@@ -42,8 +42,6 @@ public final class QueryUtils {
 
         // extract relevant fields from the JSON response and create a list of Articles
         ArrayList<Article> articles = extractArticlesFromJSON(jsonResponse);
-
-        // Return the {@link Event}
         return articles;
     }
 

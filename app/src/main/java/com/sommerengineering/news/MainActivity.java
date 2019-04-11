@@ -1,6 +1,5 @@
 package com.sommerengineering.news;
 
-import android.app.ActionBar;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +18,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +30,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     // URL query returns JSON object representing news articles from The Guardian
     private static final String GUARDIAN_REQUEST_URL =
             "https://content.guardianapis.com/search";
-
-    // "https://content.guardianapis.com/search?order-by=newest&q=Mexico%20and%20surf&page-size=20&show-tags=contributor&show-elements=image&show-fields=headline,thumbnail,trailText&api-key=d34b30e0-7d4c-42c9-9bc4-0af20234ffc4"
-    // ?order-by=newest&q=Mexico%20and%20surf&page-size=20&show-tags=contributor&show-elements=image&show-fields=headline,thumbnail,trailText&api-key=d34b30e0-7d4c-42c9-9bc4-0af20234ffc4
-
-    // "https://earthquake.usgs.gov/fdsnws/event/1/query"
-    // "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=10&minmag=minMagnitude&orderby=orderBy"
 
     // constant value for the ID of the single article loader
     private static final int ARTICLE_LOADER_ID = 0;
@@ -177,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         // append query parameters, for example "format=geojson"
         uriBuilder.appendQueryParameter("order-by", orderBy);
-        uriBuilder.appendQueryParameter("q", "Mexico%20and%20surf");
+        uriBuilder.appendQueryParameter("q", "Baja%20and%20surf");
         uriBuilder.appendQueryParameter("page-size", pageCount);
         uriBuilder.appendQueryParameter("show-tags", "contributor");
         uriBuilder.appendQueryParameter("show-elements", "image");
